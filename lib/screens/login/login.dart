@@ -6,7 +6,7 @@ class FirstPage extends StatelessWidget {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        title: Text('Routing App'),
+        title: Text('Login'),
       ),
       body: Center(
         child: Column(
@@ -17,7 +17,7 @@ class FirstPage extends StatelessWidget {
               style: TextStyle(fontSize: 50),
             ),
             RaisedButton(
-              child: Text('Go to second'),
+              child: Text('Go to home'),
               onPressed: () {
                 Navigator.of(context).pushNamed('/second',
                     arguments: 'Hello there from the first page!');

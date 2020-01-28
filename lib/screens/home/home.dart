@@ -13,14 +13,14 @@ class SecondPage extends StatelessWidget {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        title: Text('Routing App'),
+        title: Text('Home'),
       ),
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Text(
-              'Second Page',
+              'Home',
               style: TextStyle(fontSize: 50),
             ),
             Text(
