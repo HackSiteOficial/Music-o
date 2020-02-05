@@ -9,12 +9,35 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
-    final logo = Hero(
+    final welcome = Hero(
       tag: 'hero',
       child: Container(
         height: MediaQuery.of(context).size.height * 0.4,
-        child: Image.asset('assets/logo2.png'),
+        child: Padding(
+          padding: EdgeInsets.only(top: 20.0),
+          child: Text.rich(
+            TextSpan(
+              text: 'Bienvenido de Nuevo \n',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16.0
+              ),// default text style
+              children: <TextSpan>[
+                TextSpan(
+                  text: 'Inicia Sesion',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    fontSize: 30.0,
+                    height: 1.5,
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
+        // child: Image.asset('assets/logo2.png'),
+      ),
     );
 
     final email = TextFormField(
@@ -144,7 +167,7 @@ class _LoginPageState extends State<LoginPage> {
           shrinkWrap: true,
           padding: EdgeInsets.only(left: 30.0, right: 30.0),
           children: <Widget>[
-            logo,
+            welcome,
             SizedBox(height: 50.0),
             email,
             SizedBox(height: 25.0),
