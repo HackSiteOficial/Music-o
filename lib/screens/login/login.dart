@@ -12,7 +12,7 @@ class _LoginPageState extends State<LoginPage> {
     final welcome = Hero(
       tag: 'hero',
       child: Container(
-        height: MediaQuery.of(context).size.height * 0.4,
+        height: MediaQuery.of(context).size.height * 0.3,
         child: Padding(
           padding: EdgeInsets.only(top: 20.0),
           child: Text.rich(
@@ -160,6 +160,33 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
 
+    final sign = FlatButton(
+      padding: EdgeInsets.only(top: 20.0),
+      child: Align(
+        alignment: Alignment.center,
+        child: Text.rich(
+          TextSpan(
+            text: 'Aun no tienes cuenta, ',
+            style: TextStyle(
+                color: Colors.white70,
+                fontSize: 14.0
+            ),// default text style
+            children: <TextSpan>[
+              TextSpan(
+                text: 'Registrate',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  fontSize: 14.0,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+      onPressed: () {},
+    );
+
     return Scaffold(
       backgroundColor: Colors.black,
       body: Center(
@@ -175,7 +202,9 @@ class _LoginPageState extends State<LoginPage> {
             SizedBox(height: 5.0),
             forgotLabel,
             SizedBox(height: 30.0),
-            loginButton
+            loginButton,
+            SizedBox(height: 30.0),
+            sign,
           ],
         ),
       ),
