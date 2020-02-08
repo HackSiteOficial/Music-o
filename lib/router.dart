@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:music_finder/screens/login/login.dart';
 import 'package:music_finder/screens/home/home.dart';
+import 'package:music_finder/screens/signup/signup.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -16,7 +17,14 @@ class RouteGenerator {
             ),
           );
         }
-        /*return _errorRoute();
+        break;
+      case '/signup':
+        if (args is String) {
+          return MaterialPageRoute(
+            builder: (_) => SignUpPage(),
+          );
+        }
+    /*return _errorRoute();
       default:
         return _errorRoute();*/
     }
