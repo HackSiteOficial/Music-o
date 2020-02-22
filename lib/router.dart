@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:music_finder/screens/home/home.dart';
-import 'package:music_finder/screens/signup/signup.dart';
+import 'package:music_finder/screens/profile/profile.dart';
 import 'package:music_finder/screens/root/root.dart';
 import 'package:music_finder/services/authentication.dart';
 
@@ -9,18 +9,16 @@ class RouteGenerator {
     final args = settings.arguments;
     switch (settings.name) {
       case '/':
-        return MaterialPageRoute(builder: (_) => RootPage(auth: new Auth(),));
+        return MaterialPageRoute(builder: (_) => RootPage(auth: new Auth()));
       case '/home':
         return MaterialPageRoute(
           builder: (_) => HomePage(),
         );
         break;
-      case '/signup':
-        if (args is String) {
-          return MaterialPageRoute(
-            builder: (_) => SignUpPage(),
-          );
-        }
+      case '/profile':
+        return MaterialPageRoute(
+          builder: (_) => ProfilePage(),
+        );
       /*return _errorRoute();
       default:
         return _errorRoute();*/

@@ -31,7 +31,6 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
     return false;
   }
 
-  // Perform login or signup
   void validateAndSubmit() async {
     setState(() {
       _errorMessage = "";
@@ -91,11 +90,11 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
   Widget build(BuildContext context) {
     return new Scaffold(
         body: Stack(
-          children: <Widget>[
-            _showForm(),
-            _showCircularProgress(),
-          ],
-        ));
+      children: <Widget>[
+        _showForm(),
+        _showCircularProgress(),
+      ],
+    ));
   }
 
   Widget _showCircularProgress() {
@@ -132,31 +131,31 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
 //  }
 
   Widget _showForm() {
-    return new Scaffold(
-        backgroundColor: Colors.black,
-        body: Center(
-          child: Form(
-            key: _formKey,
-            child: ListView(
-              padding: EdgeInsets.only(left: 30.0, right: 30.0, top: 60.0),
-              children: <Widget>[
-                showLogo(),
-                SizedBox(height: 120.0),
-                showEmailInput(),
-                SizedBox(height: 25.0),
-                showPasswordInput(),
-                SizedBox(height: 5.0),
-                forgotLabel(),
-                SizedBox(height: 30.0),
-                showPrimaryButton(),
-                SizedBox(height: 30.0),
-                showSecondaryButton(),
-                showErrorMessage(),
-              ],
-            ),
-          )
-        )
-    );
+    return Container(
+        height: MediaQuery.of(context).size.height,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/back2.jpg'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Scaffold(
+            backgroundColor: Colors.transparent,
+            body: Center(
+                child: Form(
+                  key: _formKey,
+                  child: ListView(
+                    padding: EdgeInsets.only(left: 30.0, right: 30.0, top: 60.0),
+                    children: <Widget>[
+                      showLogo(),
+                      showEmailInput(),
+                      showPasswordInput(),
+                      showPrimaryButton(),
+                      showSecondarySign(),
+                      showErrorMessage(),
+                    ],
+              ),
+            ))));
   }
 
   Widget showErrorMessage() {
@@ -177,107 +176,126 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
   }
 
   Widget showLogo() {
-    return new Hero(
-      tag: 'hero',
-      child: Container(
-        height: MediaQuery.of(context).size.height * 0.3,
-        child: Padding(
-          padding: EdgeInsets.only(top: 20.0),
-          child: Text.rich(
-            TextSpan(
-              text: 'Bienvenido de Nuevo \n',
-              style: TextStyle(
-                  color: Colors.white, fontSize: 16.0), // default text style
-              children: <TextSpan>[
-                TextSpan(
-                  text: 'Inicia Sesion',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                    fontSize: 30.0,
-                    height: 1.5,
+    return _isLoginForm
+        ? Hero(
+            tag: 'hero',
+            child: Container(
+              height: MediaQuery.of(context).size.height * 0.5,
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text.rich(
+                  TextSpan(
+                    text: "Music'o \n",
+                    style: TextStyle(color: Colors.white, fontSize: 18.0),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: 'Entra',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          fontSize: 60.0,
+                          height: 1.5,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ],
+              ),
             ),
-          ),
-        ),
-      ),
-    );
+          )
+        : Hero(
+            tag: 'hero',
+            child: Container(
+              height: MediaQuery.of(context).size.height * 0.5,
+              child: Padding(
+                padding: EdgeInsets.only(top: 20.0),
+                child: Text.rich(
+                  TextSpan(
+                    text: 'Eres nuevo \n',
+                    style: TextStyle(color: Colors.white, fontSize: 18.0),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: 'Registrate',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          fontSize: 60.0,
+                          height: 1.5,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
   }
 
   Widget showEmailInput() {
-    return TextFormField(
-      keyboardType: TextInputType.emailAddress,
-      autofocus: false,
-      maxLines: 1,
-      decoration: InputDecoration(
-        labelText: 'Correo Electronico',
-        labelStyle: TextStyle(color: Colors.white),
-        contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15.0),
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.1,
+      child: TextFormField(
+        keyboardType: TextInputType.emailAddress,
+        autofocus: false,
+        maxLines: 1,
+        decoration: InputDecoration(
+          prefixIcon: Icon(Icons.email, color: Colors.white),
+          labelText: 'Correo Electronico',
+          hasFloatingPlaceholder: false,
+          contentPadding: EdgeInsetsDirectional.only(bottom: 16.0),
+          labelStyle: TextStyle(color: Colors.white),
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.grey),
+          ),
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.white),
+          ),
+          errorBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.red),
+          ),
+          focusedErrorBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.red),
+          ),
         ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(18.0),
-          borderSide: BorderSide(color: Colors.white, width: 1.0),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(18.0),
-          borderSide: BorderSide(color: Colors.white, width: 1.0),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(18.0),
-          borderSide: BorderSide(color: Colors.red, width: 1.0),
-        ),
-        focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(18.0),
-          borderSide: BorderSide(color: Colors.red, width: 1.0),
-        ),
+        style: TextStyle(color: Colors.white),
+        validator: (value) =>
+            value.isEmpty ? 'El correo no puede quedar vacio' : null,
+        onSaved: (value) => _email = value.trim(),
       ),
-      style: TextStyle(color: Colors.white),
-      validator: (value) => value.isEmpty ? 'El correo no puede quedar vacio' : null,
-      onSaved: (value) => _email = value.trim(),
     );
   }
 
   Widget showPasswordInput() {
-    return TextFormField(
-      autofocus: false,
-      obscureText: true,
-      maxLines: 1,
-      decoration: InputDecoration(
-        labelText: 'Contraseña',
-        suffixIcon: IconButton(
-            color: Colors.white,
-            icon: Icon(Icons.visibility_off),
-            onPressed: () {
-              debugPrint('222');
-            }),
-        labelStyle: TextStyle(color: Colors.white),
-        contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(15.0)),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(18.0),
-          borderSide: BorderSide(color: Colors.white, width: 1.0),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(18.0),
-          borderSide: BorderSide(color: Colors.white, width: 1.0),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(18.0),
-          borderSide: BorderSide(color: Colors.red, width: 1.0),
-        ),
-        focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(18.0),
-          borderSide: BorderSide(color: Colors.red, width: 1.0),
-        ),
-      ),
-      style: TextStyle(color: Colors.white),
-      validator: (value) => value.isEmpty ? 'Password can\'t be empty' : null,
-      onSaved: (value) => _password = value.trim(),
-    );
+    return Container(
+        height: MediaQuery.of(context).size.height * 0.1,
+        child: TextFormField(
+          autofocus: false,
+          obscureText: true,
+          maxLines: 1,
+          decoration: InputDecoration(
+            prefixIcon: Icon(Icons.lock_outline, color: Colors.white),
+            labelText: 'Contraseña',
+            hasFloatingPlaceholder: false,
+            contentPadding: EdgeInsetsDirectional.only(bottom: 16.0),
+            labelStyle: TextStyle(color: Colors.white),
+            enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.grey),
+            ),
+            focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.white),
+            ),
+            errorBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.red),
+            ),
+            focusedErrorBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.red),
+            ),
+          ),
+          style: TextStyle(color: Colors.white),
+          validator: (value) =>
+              value.isEmpty ? 'La contraseña no puede quedar vacio' : null,
+          onSaved: (value) => _password = value.trim(),
+        ));
   }
 
   void _setAgreedToTOS(bool newValue) {
@@ -287,82 +305,155 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
   }
 
   Widget forgotLabel() {
-    return _isLoginForm ? FlatButton(
-      padding: EdgeInsets.all(0.0),
-      child: Align(
-        alignment: Alignment.centerRight,
-        child: Text(
-          '¿Olvidaste tu contraseña?',
-          style: TextStyle(color: Colors.white70),
-        ),
-      ),
-      onPressed: () {},
-    ) : Padding(
-        padding: EdgeInsets.symmetric(vertical: 16.0),
-        child: Theme(
-          data: Theme.of(context).copyWith(
-            unselectedWidgetColor: Colors.white,
-          ),
-          child: Row(
-            children: <Widget>[
-              Checkbox(
-                checkColor: Colors.white,
-                activeColor: Colors.black,
-                value: _agreedToTOS,
-                onChanged: _setAgreedToTOS,
+    return _isLoginForm
+        ? FlatButton(
+            padding: EdgeInsets.all(0.0),
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: Text(
+                '¿Olvidaste tu contraseña?',
+                style: TextStyle(color: Colors.white70),
               ),
-              GestureDetector(
-                onTap: () => _setAgreedToTOS(!_agreedToTOS),
-                child: Text(
-                  'Aceptar terminos y condiciones',
-                  style: TextStyle(color: Colors.white70, fontSize: 14.0),
-                ),
+            ),
+            onPressed: () {},
+          )
+        : Padding(
+            padding: EdgeInsets.symmetric(vertical: 16.0),
+            child: Theme(
+              data: Theme.of(context).copyWith(
+                unselectedWidgetColor: Colors.white,
               ),
-            ],
-          ),
-        ));
+              child: Row(
+                children: <Widget>[
+                  Checkbox(
+                    checkColor: Colors.white,
+                    activeColor: Colors.black,
+                    value: _agreedToTOS,
+                    onChanged: _setAgreedToTOS,
+                  ),
+                  GestureDetector(
+                    onTap: () => _setAgreedToTOS(!_agreedToTOS),
+                    child: Text(
+                      'Aceptar terminos y condiciones',
+                      style: TextStyle(color: Colors.white70, fontSize: 14.0),
+                    ),
+                  ),
+                ],
+              ),
+            ));
   }
 
   Widget showPrimaryButton() {
-    return Padding(
-        padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 50.0),
-          child: RaisedButton(
-            color: Colors.grey,
-            padding: EdgeInsets.all(12),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(24)),
-            child: Text(_isLoginForm ? 'Iniciar Sesion' : 'Registrate',
-                style: TextStyle(fontSize: 14.0, color: Colors.white)),
-            onPressed: validateAndSubmit,
-          ),
-        );
-  }
-
-  Widget showSecondaryButton() {
-    return FlatButton(
-      padding: EdgeInsets.only(top: 20.0),
-      child: Align(
-        alignment: Alignment.center,
-        child: _isLoginForm ? Text.rich(
-          TextSpan(
-            text: 'Aun no tienes cuenta, ',
-            style: TextStyle(
-                color: Colors.white70, fontSize: 14.0),
-            children: <TextSpan>[
-              TextSpan(
-                text: 'Registrate',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                  fontSize: 14.0,
-                ),
-              ),
-            ],
-          ),
-        ) : Text(''),
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.08,
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Colors.grey,
+          style: BorderStyle.solid,
+          width: 2.0,
+        ),
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(0.0),
       ),
-      onPressed: toggleFormMode,
+      child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 8.0),
+          child: RaisedButton(
+            elevation: 0.0,
+            color: Colors.transparent,
+            padding: EdgeInsets.all(12),
+            onPressed: validateAndSubmit,
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: Text(_isLoginForm ? 'INICIA SESION' : 'REGISTRATE',
+                  style: TextStyle(fontSize: 14.0, color: Colors.white)),
+            ),
+          )),
     );
   }
 
+  Widget showSecondaryButton() {
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.1,
+      child: FlatButton(
+        padding: EdgeInsets.only(top: 20.0),
+        child: Align(
+            alignment: Alignment.centerLeft,
+            child: _isLoginForm
+                ? Text(
+                    'REGISTRATE',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontSize: 12.0,
+                    ),
+                  )
+                : Text.rich(
+                    TextSpan(
+                      text: 'Ya tienes cuenta, ',
+                      style: TextStyle(color: Colors.white70, fontSize: 14.0),
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: 'Inicia Sesión',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            fontSize: 14.0,
+                          ),
+                        ),
+                      ],
+                    ),
+                  )),
+        onPressed: toggleFormMode,
+      ),
+    );
+  }
+
+  Widget showSecondarySign() {
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.1,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          FlatButton(
+            padding: EdgeInsets.only(top: 20.0),
+            child: _isLoginForm
+                ? Text(
+                    'REGISTRATE',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontSize: 12.0,
+                    ),
+                  )
+                : Text(
+                    'INICIA SESION',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontSize: 12.0,
+                    ),
+                  ),
+            onPressed: toggleFormMode,
+          ),
+          Row(
+            children: <Widget>[
+              _isLoginForm
+                  ? FlatButton(
+                      padding: EdgeInsets.only(top: 20.0),
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: Text(
+                          '¿Olvidaste tu contraseña?',
+                          style: TextStyle(color: Colors.white70),
+                        ),
+                      ),
+                      onPressed: () {},
+                    )
+                  : Text('')
+            ],
+          ),
+        ],
+      ),
+    );
+  }
 }

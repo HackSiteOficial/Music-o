@@ -4,8 +4,8 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:music_finder/model/todo.dart';
 import 'dart:async';
 
-class HomePage extends StatefulWidget {
-  HomePage({Key key, this.auth, this.userId, this.logoutCallback})
+class ProfilePage extends StatefulWidget {
+  ProfilePage({Key key, this.auth, this.userId, this.logoutCallback})
       : super(key: key);
 
   final BaseAuth auth;
@@ -13,10 +13,10 @@ class HomePage extends StatefulWidget {
   final String userId;
 
   @override
-  State<StatefulWidget> createState() => new _HomePageState();
+  State<StatefulWidget> createState() => new _ProfilePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _ProfilePageState extends State<ProfilePage> {
   List<Todo> _todoList;
 
   final FirebaseDatabase _database = FirebaseDatabase.instance;
@@ -95,7 +95,7 @@ class _HomePageState extends State<HomePage> {
         return AlertDialog(
           title: new Text("Verify your account"),
           content:
-              new Text("Link to verify account has been sent to your email"),
+          new Text("Link to verify account has been sent to your email"),
           actions: <Widget>[
             new FlatButton(
               child: new Text("Dismiss"),
@@ -176,12 +176,12 @@ class _HomePageState extends State<HomePage> {
               children: <Widget>[
                 new Expanded(
                     child: new TextField(
-                  controller: _textEditingController,
-                  autofocus: true,
-                  decoration: new InputDecoration(
-                    labelText: 'Add new todo',
-                  ),
-                ))
+                      controller: _textEditingController,
+                      autofocus: true,
+                      decoration: new InputDecoration(
+                        labelText: 'Add new todo',
+                      ),
+                    ))
               ],
             ),
             actions: <Widget>[
@@ -225,10 +225,10 @@ class _HomePageState extends State<HomePage> {
                 trailing: IconButton(
                     icon: (completed)
                         ? Icon(
-                            Icons.done_outline,
-                            color: Colors.green,
-                            size: 20.0,
-                          )
+                      Icons.done_outline,
+                      color: Colors.green,
+                      size: 20.0,
+                    )
                         : Icon(Icons.done, color: Colors.grey, size: 20.0),
                     onPressed: () {
                       updateTodo(_todoList[index]);
@@ -249,23 +249,27 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-        appBar: new AppBar(
-          title: new Text('Flutter login demo'),
-          actions: <Widget>[
-            new FlatButton(
-                child: new Text('Logout',
-                    style: new TextStyle(fontSize: 17.0, color: Colors.white)),
-                onPressed: signOut)
-          ],
-        ),
-        body: showTodoList(),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            showAddTodoDialog(context);
-          },
-          tooltip: 'Increment',
-          child: Icon(Icons.add),
-        ));
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        centerTitle: true,
+        title: Text('PERFIL', textAlign: TextAlign.center, style: TextStyle(letterSpacing: 6),),
+//          actions: <Widget>[
+//            new FlatButton(
+//                child: new Text('Logout',
+//                    style: new TextStyle(fontSize: 17.0, color: Colors.white)),
+//                onPressed: signOut)
+//          ],
+      ),
+      body: showTodoList(),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.white,
+        onPressed: () {
+          showAddTodoDialog(context);
+        },
+        tooltip: 'Increment',
+        child: Icon(Icons.add, color: Colors.black),
+      ));
   }
 }
