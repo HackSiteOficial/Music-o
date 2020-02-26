@@ -89,10 +89,11 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+      resizeToAvoidBottomPadding: false,
         body: Stack(
-      children: <Widget>[
-        _showForm(),
-        _showCircularProgress(),
+          children: <Widget>[
+            _showForm(),
+            _showCircularProgress(),
       ],
     ));
   }
@@ -132,7 +133,6 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
 
   Widget _showForm() {
     return Container(
-        height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/back2.jpg'),
@@ -140,22 +140,22 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
           ),
         ),
         child: Scaffold(
-            backgroundColor: Colors.transparent,
-            body: Center(
-                child: Form(
-                  key: _formKey,
-                  child: ListView(
-                    padding: EdgeInsets.only(left: 30.0, right: 30.0, top: 60.0),
-                    children: <Widget>[
-                      showLogo(),
-                      showEmailInput(),
-                      showPasswordInput(),
-                      showPrimaryButton(),
-                      showSecondarySign(),
-                      showErrorMessage(),
-                    ],
-              ),
-            ))));
+          backgroundColor: Colors.transparent,
+          body: Center(
+              child: Form(
+                key: _formKey,
+                child: ListView(
+                  padding: EdgeInsets.only(left: 30.0, right: 30.0, top: 60.0),
+                  children: <Widget>[
+                    showLogo(),
+                    showEmailInput(),
+                    showPasswordInput(),
+                    showPrimaryButton(),
+                    showSecondarySign(),
+                    showErrorMessage(),
+                  ],
+            ),
+          ))));
   }
 
   Widget showErrorMessage() {
@@ -207,11 +207,11 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
             tag: 'hero',
             child: Container(
               height: MediaQuery.of(context).size.height * 0.5,
-              child: Padding(
-                padding: EdgeInsets.only(top: 20.0),
+              child: Align(
+                alignment: Alignment.centerLeft,
                 child: Text.rich(
                   TextSpan(
-                    text: 'Eres nuevo \n',
+                    text: "Eres Nuevo \n",
                     style: TextStyle(color: Colors.white, fontSize: 18.0),
                     children: <TextSpan>[
                       TextSpan(
