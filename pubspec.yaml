@@ -19,9 +19,8 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/logo2.png
-    - assets/back.jpeg
     - assets/back2.jpg
+    - assets/perfil.jpg
 
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a

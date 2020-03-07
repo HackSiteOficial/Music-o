@@ -5,246 +5,92 @@ import 'package:music_finder/model/todo.dart';
 import 'dart:async';
 
 class ProfilePage extends StatefulWidget {
-  ProfilePage({Key key, this.auth, this.userId, this.logoutCallback})
-      : super(key: key);
-
-  final BaseAuth auth;
-  final VoidCallback logoutCallback;
-  final String userId;
-
   @override
   State<StatefulWidget> createState() => new _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  List<Todo> _todoList;
-
-  final FirebaseDatabase _database = FirebaseDatabase.instance;
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
-  final _textEditingController = TextEditingController();
-  StreamSubscription<Event> _onTodoAddedSubscription;
-  StreamSubscription<Event> _onTodoChangedSubscription;
-
-  Query _todoQuery;
-
-  bool _isEmailVerified = false;
-
   @override
-  void initState() {
-    super.initState();
-
-    _checkEmailVerification();
-
-    _todoList = new List();
-    _todoQuery = _database
-        .reference()
-        .child("todo")
-        .orderByChild("userId")
-        .equalTo(widget.userId);
-    _onTodoAddedSubscription = _todoQuery.onChildAdded.listen(onEntryAdded);
-    _onTodoChangedSubscription =
-        _todoQuery.onChildChanged.listen(onEntryChanged);
-  }
-
-  void _checkEmailVerification() async {
-    _isEmailVerified = await widget.auth.isEmailVerified();
-    if (!_isEmailVerified) {
-      _showVerifyEmailDialog();
-    }
-  }
-
-  void _resentVerifyEmail() {
-    widget.auth.sendEmailVerification();
-    _showVerifyEmailSentDialog();
-  }
-
-  void _showVerifyEmailDialog() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return AlertDialog(
-          title: new Text("Verify your account"),
-          content: new Text("Please verify account in the link sent to email"),
-          actions: <Widget>[
-            new FlatButton(
-              child: new Text("Resent link"),
-              onPressed: () {
-                Navigator.of(context).pop();
-                _resentVerifyEmail();
-              },
-            ),
-            new FlatButton(
-              child: new Text("Dismiss"),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  void _showVerifyEmailSentDialog() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return AlertDialog(
-          title: new Text("Verify your account"),
-          content:
-          new Text("Link to verify account has been sent to your email"),
-          actions: <Widget>[
-            new FlatButton(
-              child: new Text("Dismiss"),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  @override
-  void dispose() {
-    _onTodoAddedSubscription.cancel();
-    _onTodoChangedSubscription.cancel();
-    super.dispose();
-  }
-
-  onEntryChanged(Event event) {
-    var oldEntry = _todoList.singleWhere((entry) {
-      return entry.key == event.snapshot.key;
-    });
-
-    setState(() {
-      _todoList[_todoList.indexOf(oldEntry)] =
-          Todo.fromSnapshot(event.snapshot);
-    });
-  }
-
-  onEntryAdded(Event event) {
-    setState(() {
-      _todoList.add(Todo.fromSnapshot(event.snapshot));
-    });
-  }
-
-  signOut() async {
-    try {
-      await widget.auth.signOut();
-      widget.logoutCallback();
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  addNewTodo(String todoItem) {
-    if (todoItem.length > 0) {
-      Todo todo = new Todo(todoItem.toString(), widget.userId, false);
-      _database.reference().child("todo").push().set(todo.toJson());
-    }
-  }
-
-  updateTodo(Todo todo) {
-    //Toggle completed
-    todo.completed = !todo.completed;
-    if (todo != null) {
-      _database.reference().child("todo").child(todo.key).set(todo.toJson());
-    }
-  }
-
-  deleteTodo(String todoId, int index) {
-    _database.reference().child("todo").child(todoId).remove().then((_) {
-      print("Delete $todoId successful");
-      setState(() {
-        _todoList.removeAt(index);
-      });
-    });
-  }
-
-  showAddTodoDialog(BuildContext context) async {
-    _textEditingController.clear();
-    await showDialog<String>(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            content: new Row(
-              children: <Widget>[
-                new Expanded(
-                    child: new TextField(
-                      controller: _textEditingController,
-                      autofocus: true,
-                      decoration: new InputDecoration(
-                        labelText: 'Add new todo',
+  Widget head() {
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.3,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Container(
+            padding: EdgeInsets.only(left: 20.0),
+            width: MediaQuery.of(context).size.width * 0.4,
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: RichText(
+                text: TextSpan(
+                  text: "NOMBRE \n",
+                  style: TextStyle(color: Colors.grey, fontSize: 12.0, letterSpacing: 1.5),
+                  children: [
+                    TextSpan(
+                      text: 'Saúl\n',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 24.0,
+                        height: 1.5
                       ),
-                    ))
-              ],
+                    ),
+                    WidgetSpan(
+                      child: Icon(Icons.star, size: 16, color: Colors.white),
+                    ),
+                    TextSpan(
+                      text: ' 23',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16.0,
+                        height: 3
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
-            actions: <Widget>[
-              new FlatButton(
-                  child: const Text('Cancel'),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  }),
-              new FlatButton(
-                  child: const Text('Save'),
-                  onPressed: () {
-                    addNewTodo(_textEditingController.text.toString());
-                    Navigator.pop(context);
-                  })
-            ],
-          );
-        });
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width * 0.6,
+            height: 200,
+            child: Center(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(15.0),
+                child: Image(
+                  image: AssetImage('assets/perfil.jpg')
+                )
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
-  Widget showTodoList() {
-    if (_todoList.length > 0) {
-      return ListView.builder(
-          shrinkWrap: true,
-          itemCount: _todoList.length,
-          itemBuilder: (BuildContext context, int index) {
-            String todoId = _todoList[index].key;
-            String subject = _todoList[index].subject;
-            bool completed = _todoList[index].completed;
-            String userId = _todoList[index].userId;
-            return Dismissible(
-              key: Key(todoId),
-              background: Container(color: Colors.red),
-              onDismissed: (direction) async {
-                deleteTodo(todoId, index);
-              },
-              child: ListTile(
-                title: Text(
-                  subject,
-                  style: TextStyle(fontSize: 20.0),
-                ),
-                trailing: IconButton(
-                    icon: (completed)
-                        ? Icon(
-                      Icons.done_outline,
-                      color: Colors.green,
-                      size: 20.0,
-                    )
-                        : Icon(Icons.done, color: Colors.grey, size: 20.0),
-                    onPressed: () {
-                      updateTodo(_todoList[index]);
-                    }),
-              ),
-            );
-          });
-    } else {
-      return Center(
+  Widget info() {
+    return Container(
+      child: Padding(
+        padding: EdgeInsets.only(left: 20.0, top: 20.0),
+        child: Text(
+          'INFORMACION',
+          style: TextStyle(color: Colors.grey, fontSize: 12.0, letterSpacing: 1.5),
+        ),
+      )
+    );
+  }
+
+  Widget infoBio() {
+    return Container(
+        child: Padding(
+          padding: EdgeInsets.all(20.0),
           child: Text(
-            "Welcome. Your list is empty",
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 30.0),
-          )
-      );
-    }
+            'Hello World! Soy Saúl, fan de las películas y los videojuegos, idealista, hacker, y este es mi hogar.',
+            style: TextStyle(color: Colors.white, fontSize: 14.0, letterSpacing: 1.5),
+          ),
+        )
+    );
   }
 
   @override
@@ -262,14 +108,21 @@ class _ProfilePageState extends State<ProfilePage> {
 //                onPressed: signOut)
 //          ],
       ),
-      body: showTodoList(),
+      body: Container(
+        child: ListView(
+          children: <Widget>[
+            head(),
+            info(),
+            infoBio(),
+          ]
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.white,
         onPressed: () {
-          showAddTodoDialog(context);
         },
         tooltip: 'Increment',
-        child: Icon(Icons.add, color: Colors.black),
+        child: Icon(Icons.edit, color: Colors.black),
       ));
   }
 }
