@@ -1,8 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:music_finder/services/authentication.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:music_finder/model/todo.dart';
-import 'dart:async';
+import 'cards_section_draggable.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -10,7 +8,6 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  @override
   Widget head() {
     return Container(
       height: MediaQuery.of(context).size.height * 0.3,
@@ -57,10 +54,10 @@ class _ProfilePageState extends State<ProfilePage> {
             height: 200,
             child: Center(
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(15.0),
-                child: Image(
-                  image: AssetImage('assets/perfil.jpg')
-                )
+                  borderRadius: BorderRadius.circular(15.0),
+                  child: Image(
+                      image: AssetImage('assets/perfil.jpg')
+                  )
               ),
             ),
           ),
@@ -72,9 +69,9 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget info() {
     return Container(
       child: Padding(
-        padding: EdgeInsets.only(left: 20.0, top: 20.0),
+        padding: EdgeInsets.only(left: 20.0, top: 10.0),
         child: Text(
-          'INFORMACION',
+          'DESCRIPCION',
           style: TextStyle(color: Colors.grey, fontSize: 12.0, letterSpacing: 1.5),
         ),
       )
@@ -84,12 +81,108 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget infoBio() {
     return Container(
         child: Padding(
-          padding: EdgeInsets.all(20.0),
+          padding: EdgeInsets.only(left: 20.0, top: 10),
           child: Text(
             'Hello World! Soy Saúl, fan de las películas y los videojuegos, idealista, hacker, y este es mi hogar.',
-            style: TextStyle(color: Colors.white, fontSize: 14.0, letterSpacing: 1.5),
+            style: TextStyle(color: Colors.white, fontSize: 16.0, letterSpacing: 1.5, fontWeight: FontWeight.bold),
           ),
         )
+    );
+  }
+
+  Widget infoData() {
+    return Container(
+      padding: EdgeInsets.only(left: 20.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          RichText(
+            text: TextSpan(
+              text: "ESTADO \n",
+              style: TextStyle(color: Colors.grey, fontSize: 12.0, letterSpacing: 1.5, height: 3),
+              children: [
+                TextSpan(
+                  text: 'Hidalgo',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontSize: 16.0,
+                      height: 1.7
+                  ),
+                ),
+              ],
+            ),
+          ),
+          RichText(
+            text: TextSpan(
+              text: "INSTRUMENTOS \n",
+              style: TextStyle(color: Colors.grey, fontSize: 12.0, letterSpacing: 1.5, height: 3),
+              children: [
+                TextSpan(
+                  text: 'Guitarra, Bateria, Piano',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontSize: 16.0,
+                      height: 1.7
+                  ),
+                ),
+              ],
+            ),
+          ),
+          RichText(
+            text: TextSpan(
+              text: "GENEROS MUSICALES \n",
+              style: TextStyle(color: Colors.grey, fontSize: 12.0, letterSpacing: 1.5, height: 3),
+              children: [
+                TextSpan(
+                  text: 'Rock, Cumbia, Clasica',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontSize: 16.0,
+                      height: 1.7
+                  ),
+                ),
+              ],
+            ),
+          ),
+          RichText(
+            text: TextSpan(
+              text: "AÑOS DE EXPERIENCIA \n",
+              style: TextStyle(color: Colors.grey, fontSize: 12.0, letterSpacing: 1.5, height: 3),
+              children: [
+                TextSpan(
+                  text: '5',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontSize: 16.0,
+                      height: 1.7
+                  ),
+                ),
+              ],
+            ),
+          ),
+          RichText(
+            text: TextSpan(
+              text: "INSTRUMENTO PROPIO \n",
+              style: TextStyle(color: Colors.grey, fontSize: 12.0, letterSpacing: 1.5, height: 3),
+              children: [
+                TextSpan(
+                  text: 'Si',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontSize: 16.0,
+                      height: 1.7
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      )
     );
   }
 
@@ -114,6 +207,7 @@ class _ProfilePageState extends State<ProfilePage> {
             head(),
             info(),
             infoBio(),
+            infoData(),
           ]
         ),
       ),
@@ -126,3 +220,4 @@ class _ProfilePageState extends State<ProfilePage> {
       ));
   }
 }
+
