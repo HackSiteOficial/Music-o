@@ -23,57 +23,97 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   Widget build(BuildContext context) {
     final logo = Hero(
       tag: 'hero',
-      child: CircleAvatar(
-          backgroundColor: Colors.transparent,
-          radius: 60.0,
-          child: ClipOval(
-            child: Image.asset(
-              'assets/images/default.png',
-              fit: BoxFit.cover,
-              width: 120.0,
-              height: 120.0,
+      child: Container(
+        height: MediaQuery.of(context).size.height * 0.5,
+        child: Align(
+          alignment: Alignment.centerLeft,
+          child: Text.rich(
+            TextSpan(
+              text: "Olvidaste algo? \n",
+              style: TextStyle(color: Colors.white, fontSize: 18.0),
+              children: <TextSpan>[
+                TextSpan(
+                  text: 'Recupera tu contraseña',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    fontSize: 50.0,
+                    height: 1.2,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+
+    final email = Container(
+        height: MediaQuery.of(context).size.height * 0.1,
+        child: TextFormField(
+          keyboardType: TextInputType.emailAddress,
+          autofocus: false,
+          controller: _email,
+          validator: Validator.validateEmail,
+          style: TextStyle(color: Colors.white),
+          decoration: InputDecoration(
+            prefixIcon: Icon(Icons.email, color: Colors.white),
+            labelText: 'Correo Electronico',
+            hasFloatingPlaceholder: false,
+            contentPadding: EdgeInsetsDirectional.only(bottom: 16.0),
+            labelStyle: TextStyle(color: Colors.white),
+            enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.grey),
+            ),
+            focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.white),
+            ),
+            errorBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.red),
+            ),
+            focusedErrorBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.red),
+            ),
+          ),
+        )
+    );
+
+    final forgotPasswordButton = Container(
+      height: MediaQuery.of(context).size.height * 0.08,
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Colors.grey,
+          style: BorderStyle.solid,
+          width: 2.0,
+        ),
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(0.0),
+      ),
+      child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 8.0),
+          child: RaisedButton(
+            elevation: 0.0,
+            color: Colors.transparent,
+            padding: EdgeInsets.all(12),
+            onPressed: () {
+              _forgotPassword(email: _email.text, context: context);
+            },
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: Text('RECUPERAR CONTRASEÑA',
+                  style: TextStyle(fontSize: 14.0, color: Colors.white)),
             ),
           )),
     );
 
-    final email = TextFormField(
-      keyboardType: TextInputType.emailAddress,
-      autofocus: false,
-      controller: _email,
-      validator: Validator.validateEmail,
-      decoration: InputDecoration(
-        prefixIcon: Padding(
-          padding: EdgeInsets.only(left: 5.0),
-          child: Icon(
-            Icons.email,
-            color: Colors.grey,
-          ), // icon is 48px widget.
-        ), // icon is 48px widget.
-        hintText: 'Email',
-        contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-      ),
-    );
-
-    final forgotPasswordButton = Padding(
-      padding: EdgeInsets.symmetric(vertical: 16.0),
-      child: RaisedButton(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(24),
-        ),
-        onPressed: () {
-          _forgotPassword(email: _email.text, context: context);
-        },
-        padding: EdgeInsets.all(12),
-        color: Theme.of(context).primaryColor,
-        child: Text('FORGOT PASSWORD', style: TextStyle(color: Colors.white)),
-      ),
-    );
-
     final signInLabel = FlatButton(
-      child: Text(
-        'Sign In',
-        style: TextStyle(color: Colors.black54),
+      padding: EdgeInsets.only(top: 20.0),
+      child: Align(
+        alignment: Alignment.center,
+        child: Text(
+          'Iniciar Sesion',
+          style: TextStyle(color: Colors.white70),
+        ),
       ),
       onPressed: () {
         Navigator.pushNamed(context, '/signin');
@@ -81,7 +121,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     );
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.black,
       body: LoadingScreen(
           child: Form(
             key: _formKey,
@@ -124,17 +164,17 @@ class _ForgotPasswordState extends State<ForgotPassword> {
         await Auth.forgotPasswordEmail(email);
         await _changeLoadingVisible();
         Flushbar(
-          title: "Password Reset Email Sent",
+          title: "Correo enviado",
           message:
-          'Check your email and follow the instructions to reset your password.',
+          'Revisa tu correo y sigue las instrucciones para cambiar tu contraseña.',
           duration: Duration(seconds: 20),
         )..show(context);
       } catch (e) {
         _changeLoadingVisible();
-        print("Forgot Password Error: $e");
+        print("Error al recuperar contraseña: $e");
         String exception = Auth.getExceptionText(e);
         Flushbar(
-          title: "Forgot Password Error",
+          title: "Error al recuperar contraseña",
           message: exception,
           duration: Duration(seconds: 10),
         )..show(context);

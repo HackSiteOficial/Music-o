@@ -57,7 +57,7 @@ class _SignUpState extends State<SignUp> {
         height: MediaQuery.of(context).size.height * 0.1,
         child: TextFormField(
           autofocus: false,
-          obscureText: true,
+          textCapitalization: TextCapitalization.sentences,
           controller: _firstName,
           validator: Validator.validateName,
           decoration: InputDecoration(
@@ -87,7 +87,7 @@ class _SignUpState extends State<SignUp> {
       height: MediaQuery.of(context).size.height * 0.1,
       child: TextFormField(
         autofocus: false,
-        obscureText: true,
+        textCapitalization: TextCapitalization.sentences,
         controller: _lastName,
         validator: Validator.validateName,
         decoration: InputDecoration(

@@ -1,14 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'cards_section_draggable.dart';
+//import 'cards_section_draggable.dart';
+import 'package:music_finder/models/state.dart';
+import 'package:music_finder/util/state_widget.dart';
 
-class ProfilePage extends StatefulWidget {
+class Profile extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => new _ProfilePageState();
+  State<StatefulWidget> createState() => new _ProfileState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _ProfileState extends State<Profile> {
+  StateModel appState;
+
   Widget head() {
+    appState = StateWidget.of(context).state;
+    final firstName = appState?.user?.firstName ?? '';
     return Container(
       height: MediaQuery.of(context).size.height * 0.3,
       child: Row(
@@ -25,12 +31,12 @@ class _ProfilePageState extends State<ProfilePage> {
                   style: TextStyle(color: Colors.grey, fontSize: 12.0, letterSpacing: 1.5),
                   children: [
                     TextSpan(
-                      text: 'Saúl\n',
+                      text: firstName + "\n",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                         fontSize: 24.0,
-                        height: 1.5
+                        height: 1.5,
                       ),
                     ),
                     WidgetSpan(
@@ -188,6 +194,10 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+
+    final email = appState?.firebaseUserAuth?.email ?? '';
+    final lastName = appState?.user?.lastName ?? '';
+
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(

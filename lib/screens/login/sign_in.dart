@@ -124,21 +124,21 @@ class _SignInState extends State<SignIn> {
       borderRadius: BorderRadius.circular(0.0),
     ),
     child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 8.0),
-        child: RaisedButton(
-          elevation: 0.0,
-          color: Colors.transparent,
-          padding: EdgeInsets.all(12),
-          onPressed: () {
-            _emailLogin(
-                email: _email.text, password: _password.text, context: context);
-          },
-          child: Align(
-            alignment: Alignment.centerRight,
-            child: Text('INICIA SESION',
-                style: TextStyle(fontSize: 14.0, color: Colors.white)),
-          ),
-        )),
+      padding: EdgeInsets.symmetric(horizontal: 8.0),
+      child: RaisedButton(
+        elevation: 0.0,
+        color: Colors.transparent,
+        padding: EdgeInsets.all(12),
+        onPressed: () {
+          _emailLogin(
+            email: _email.text, password: _password.text, context: context);
+        },
+        child: Align(
+          alignment: Alignment.centerRight,
+          child: Text('INICIA SESION',
+            style: TextStyle(fontSize: 14.0, color: Colors.white)),
+        ),
+      )),
   );
 
   final forgotSignUpLabel = Container(

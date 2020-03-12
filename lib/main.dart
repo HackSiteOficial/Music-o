@@ -4,6 +4,7 @@ import 'package:music_finder/screens/login/redirector.dart';
 import 'package:music_finder/screens/login/sign_in.dart';
 import 'package:music_finder/screens/login/sign_up.dart';
 import 'package:music_finder/screens/login/forgot_password.dart';
+import 'package:music_finder/screens/profile/profile.dart';
 
 class MyApp extends StatelessWidget {
   MyApp() {
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
         '/signin': (context) => SignIn(),
         '/signup': (context) => SignUp(),
         '/forgot-password': (context) => ForgotPassword(),
+        '/profile': (context) => Profile(),
       },
     );
   }
