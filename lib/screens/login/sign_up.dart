@@ -260,7 +260,8 @@ class _SignUpState extends State<SignUp> {
     });
   }
 
-  void _emailSignUp({String firstName,
+  void _emailSignUp({
+    String firstName,
     String lastName,
     String email,
     String password,
@@ -281,10 +282,10 @@ class _SignUpState extends State<SignUp> {
         await Navigator.pushNamed(context, '/signin');
       } catch (e) {
         _changeLoadingVisible();
-        print("Sign Up Error: $e");
+        print("Error al registrar: $e");
         String exception = Auth.getExceptionText(e);
         Flushbar(
-          title: "Sign Up Error",
+          title: "Error al registrar",
           message: exception,
           duration: Duration(seconds: 5),
         )

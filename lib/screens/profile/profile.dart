@@ -11,11 +11,17 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   StateModel appState;
+  @override
+  void initState() {
+    super.initState();
+  }
 
-  Widget head() {
+  @override
+  Widget build(BuildContext context) {
     appState = StateWidget.of(context).state;
     final firstName = appState?.user?.firstName ?? '';
-    return Container(
+
+    final head = Container(
       height: MediaQuery.of(context).size.height * 0.3,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -60,20 +66,19 @@ class _ProfileState extends State<Profile> {
             height: 200,
             child: Center(
               child: ClipRRect(
-                  borderRadius: BorderRadius.circular(15.0),
-                  child: Image(
-                      image: AssetImage('assets/perfil.jpg')
-                  )
+                borderRadius: BorderRadius.circular(15.0),
+                child: Image(
+                  image: AssetImage('assets/perfil.jpg')
+                )
               ),
             ),
           ),
         ],
       ),
     );
-  }
 
-  Widget info() {
-    return Container(
+
+    final info = Container(
       child: Padding(
         padding: EdgeInsets.only(left: 20.0, top: 10.0),
         child: Text(
@@ -82,22 +87,18 @@ class _ProfileState extends State<Profile> {
         ),
       )
     );
-  }
 
-  Widget infoBio() {
-    return Container(
-        child: Padding(
-          padding: EdgeInsets.only(left: 20.0, top: 10),
-          child: Text(
-            'Hello World! Soy Saúl, fan de las películas y los videojuegos, idealista, hacker, y este es mi hogar.',
-            style: TextStyle(color: Colors.white, fontSize: 16.0, letterSpacing: 1.5, fontWeight: FontWeight.bold),
-          ),
-        )
+    final infoBio = Container(
+      child: Padding(
+        padding: EdgeInsets.only(left: 20.0, top: 10),
+        child: Text(
+          'Hello World! Soy Saúl, fan de las películas y los videojuegos, idealista, hacker, y este es mi hogar.',
+          style: TextStyle(color: Colors.white, fontSize: 16.0, letterSpacing: 1.5, fontWeight: FontWeight.bold),
+        ),
+      )
     );
-  }
 
-  Widget infoData() {
-    return Container(
+    final infoData = Container(
       padding: EdgeInsets.only(left: 20.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -190,34 +191,16 @@ class _ProfileState extends State<Profile> {
         ],
       )
     );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-
-    final email = appState?.firebaseUserAuth?.email ?? '';
-    final lastName = appState?.user?.lastName ?? '';
 
     return Scaffold(
       backgroundColor: Colors.black,
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        centerTitle: true,
-        title: Text('PERFIL', textAlign: TextAlign.center, style: TextStyle(letterSpacing: 6),),
-//          actions: <Widget>[
-//            new FlatButton(
-//                child: new Text('Logout',
-//                    style: new TextStyle(fontSize: 17.0, color: Colors.white)),
-//                onPressed: signOut)
-//          ],
-      ),
       body: Container(
         child: ListView(
           children: <Widget>[
-            head(),
-            info(),
-            infoBio(),
-            infoData(),
+            head,
+            info,
+            infoBio,
+            infoData,
           ]
         ),
       ),
@@ -225,7 +208,6 @@ class _ProfileState extends State<Profile> {
         backgroundColor: Colors.white,
         onPressed: () {
         },
-        tooltip: 'Increment',
         child: Icon(Icons.edit, color: Colors.black),
       ));
   }
